@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>websocket</title>
+</head>
+<body>
+<div id="msg"></div>
+
+<!--可直接运行-->
+</br>
+
+
+<input type="button" value="所有行情"  onclick="subscribeAll()">
+</br>
+
+<input type="text" id="ticker">
+<input type="button" value="订阅市场行情"  onclick="ticker()">
+</br>
+<input type="text" id="order">
+<input type="button" value="订阅市场深度"  onclick="order()">
+</br>
+
+<input type="text" id="trade">
+<input type="button" value="订阅成交记录"  onclick="trade()">
+</br></br></br>
+<input type="text" id="text">
+<input type="button" value="订阅"  onclick="subscribe()">
+<input type="button" value="取消订阅"   onclick="unsubscribe()">
+</br>
+
+</body>
+<script>
+    var msg = document.getElementById("msg");
+    var wsServer = 'wss://api.ceobi.com/websocket';
+    var websocket = new WebSocket(wsServer);
+    //监听连接打开
+    websocket.onopen = function (evt) {
+        msg.innerHTML = "The connection is open";
+    };
+
+    //监听服务器数据推送
+    websocket.onmessage = function (evt) {
+        //msg.innerHTML += "<br>" + evt.data;
+      //开发者模式查看
+      console.log(evt.data)
+    };
+
+    //监听连接关闭
+    websocket.onclose = function (evt) {
+        alert("连接关闭");
+    };
+
+    //订阅
+    function subscribe (){
+		var symbol = document.getElementById("text").value;
+        if(symbol == '') return
+        var _msg = "{'event':'addChannel','channel':'"+symbol+"'}";
+    	websocket.send(_msg);
+    	msg.innerHTML += "<br>" + "订阅";
+    }
+    
+    //取消订阅
+	function unsubscribe (){
+		var symbol = document.getElementById("text").value;
+        if(symbol == '') return
+		var _msg = "{'event':'removeChannel','channel':'"+symbol+"'}";
+	    websocket.send(_msg);
+	    msg.innerHTML  += "<br>" + "取消订阅";
+    }
+    
+    function send() {
+        var text = document.getElementById("text").value
+        if(text == '') return;
+        websocket.send(text);
+    }
+
+    function subscribeAll(){
+      var _msg = "{'event':'addChannel','channel':'all_ticker'}";
+      websocket.send(_msg);
+      msg.innerHTML += "<br>" + "订阅all_ticker";
+    }
+
+    function ticker(){
+      var symbol = document.getElementById("ticker").value;
+      if(symbol == '') return
+      var _msg = "{'event':'addChannel','channel':'"+symbol+"_ticker'}";
+      websocket.send(_msg);
+      msg.innerHTML += "<br>" + "订阅ticker:"+symbol;
+    }
+    function order(){
+      var symbol = document.getElementById("order").value;
+      if(symbol == '') return
+      var _msg = "{'event':'addChannel','channel':'"+symbol+"_order'}";
+      websocket.send(_msg);
+      msg.innerHTML += "<br>" + "订阅order:"+symbol;
+    }
+    function trade(){
+      var symbol = document.getElementById("trade").value;
+      if(symbol == '') return
+      var _msg = "{'event':'addChannel','channel':'"+symbol+"_trade'}";
+      websocket.send(_msg);
+      msg.innerHTML += "<br>" + "订阅trade:"+symbol;
+    }
+    
+</script>
+</html>
