@@ -26,7 +26,10 @@ public class API {
     public static final String PUB_MARKET_trades = HOST + "/api/market/trades";
     //K线
     public static final String PUB_MARKET_kline = HOST + "/api/market/kline";
-
+    //获取交易对市场详情
+    public static final String PUB_MARKET_symbol = HOST + "/api/market/symbol/%s";
+    //历史成交记录2
+    public static final String PUB_MARKET_trades2 = HOST + "/api/market/trades/%s";
     //获取用户信息
     public static final String PRI_DEAL_accountInfo = HOST + "/api/deal/accountInfo";
     //委托下单
@@ -109,6 +112,36 @@ public class API {
      */
     public void kline() throws Exception {
         String connUrl = PUB_MARKET_kline + "?market=ceo_qc&type=1min";
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+
+    /**
+     * 获取交易对详情
+     * @throws Exception
+     */
+    public void symbol() throws Exception {
+        String symbol = "usdt_qc";
+        String connUrl = String.format(PUB_MARKET_symbol, symbol);
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+
+    /**
+     * 历史成交记录2
+     * @throws Exception
+     */
+    public void trades2() throws Exception {
+        String symbol = "usdt_qc";
+        String connUrl = String.format(PUB_MARKET_trades2, symbol) + "?sort=asc&by=timestamp&from=1573434000&till=1573436000&limit=100&offset=0";
         URL url = new URL(connUrl);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
@@ -368,7 +401,9 @@ public class API {
 //            api.getUserAddress();
 //            api.getWithdrawAddress();
 //            api.getWithdrawRecord();
-            api.getChargeRecord();
+//            api.getChargeRecord();
+//            api.symbol();
+            api.trades2();
         } catch (Exception e){
             e.printStackTrace();
         }
