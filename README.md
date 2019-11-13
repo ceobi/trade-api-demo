@@ -47,13 +47,16 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 * [历史成交](#历史成交)
 * [K线](#K线)
 * [交易对市场详情](#交易对市场详情)
-* [历史成交记录2](#历史成交记录2)
+* [Get symbol info](#Get-symbol-info) 
+* [条件查询成交记录](#条件查询成交记录)
+* [Trades](#Trades)
 * [获取用户信息](#获取用户信息)
 * [委托下单](#委托下单)
 * [取消委托](#取消委托)
 * [获取委托买单或卖单](#获取委托买单或卖单)
 * [获取多个委托买单或卖单](#获取多个委托买单或卖单)
 * [获取交易记录](#获取交易记录)
+* [获取单个订单交易记录](#获取单个订单交易记录)
 * [获取用户充值地址](#获取用户充值地址)
 * [获取用户的数字币提现地址](#获取用户的数字币提现地址)
 * [获取数字币提现记录](#获取数字币提现记录)
@@ -283,7 +286,6 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 
 [java](#K线-kline)
 
-
 ----
 ### **交易对市场详情**
 *Request*
@@ -307,12 +309,12 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
     "code": 1000,
     "message": "成功",
     "data": {
-        "id": "symbol",                                   //交易对名称；string；required: true  对应我们的market
+        "symbol": "usdt_qc",                              //交易对名称；string；required: true  
         "baseCurrency": "usdt",                           //交易货币名称；string; required: true
         "quoteCurrency": "qc",                            //计价货币名称；string；required: true
         "quantityIncrement": "0.001",                     //数量精度；string；required: true
         "tickSize": "0.00001",                            //价格精度；string；required: true
-        "takeLiquidityRate": "0.0012",                    // taker手续费率；string；
+        "takeLiquidityRate": "0.0012",                    //taker手续费率；string；
         "provideLiquidityRate": "0.0012",                 //maker手续费率；string；
         "feeCurrency": "qc"                               //手续费币种；string；        
     }
@@ -320,10 +322,48 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 ```
 *示例*
 
+[java](#Get-symbol-info)
+
+----
+### **Get-symbol-info**
+*Request*
+> Method: GET
+>
+> URL: api/market/symbol/{symbol}
+>
+> Parameters:
+>
+> | Parameters  | type   |  required   |  description   |
+> | :--------:  | :-----:  |  :-----:  |  :-----:  |
+> | symbol      | string   |  Y   |  trading symbol   |
+>
+>
+> api/market/symbol/usdt_qc
+>
+*Response*
+
+```html
+{
+    "code": 1000,
+    "message": "成功",
+    "data": {
+        "id": "usdt_qc",                                  //The trading symbol
+        "baseCurrency": "usdt",                           //The main trading currency for this symbol
+        "quoteCurrency": "qc",                            //The secondary trading currency for this symbol
+        "quantityIncrement": "0.001",                     //Quantitative accuracyAll quantities must be divisible by this number, and cannot be less than this number
+        "tickSize": "0.00001",                            //Price accuracy，All prices must be divisible by this number, and cannot be less than this number
+        "takeLiquidityRate": "0.0012",                    //The buy/sell trading fee for taker orders. Taker orders remove an item from the order books
+        "provideLiquidityRate": "0.0012",                 //The buy/sell trading fee for maker orders. Maker orders add an item to the order books.
+        "feeCurrency": "qc"                               //The currency in which fees are taken   
+    }
+}
+```
+*Demo*
+
 [java](#市场详情-symbol)
 
 ----
-### **历史成交记录2**
+### **条件查询成交记录**
 *Request*
 > Method: GET
 >
@@ -356,7 +396,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
             "uuid": "3107340",
             "price": "0.00679",         //价格
             "quantity": "1.046987",     //数量
-            "side": "buy",              //buy 买  sell 卖
+            "side": "sell",                  //buy 买   sell 卖
             "timestamp": "2019-11-08 13:28:49.0",   
             "unixtimestamp": 1573219729
           },
@@ -366,8 +406,53 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 ```
 *示例*
 
-[java](#历史成交记录-trades2)
+[java](#条件查询成交记录-trades)
 
+----
+### **Trades**
+*Request*
+> Method: GET
+>
+> URL: api/market/trades/{symbol}
+>
+> Parameters:
+>
+> | Parameters  | type   |  required   |  description   |
+> | :--------:  | :-----:  |  :-----:  |  :-----:  |
+> | symbol      | string   |  Y   |  trading symbol  |
+> | sort      | string   |  Y   |  Sort direction   (DESC ASC)   Default value: DESC |
+> | by      | string   |  N   |  Filter field  (id  timestamp)   Default value: timestamp|
+> | from      | string   |  N   | If filter by timestamp, then datetime in iso format or timestamp in millisecond otherwise trade id   |
+> | till      | string   |  N   | If filter by timestamp, then datetime in iso format or timestamp in millisecond otherwise trade id  |
+> | limit      | integer   |  N   | Default 100. Minimum value 1, Maximum value 1000   Default value: 100   |
+> | offset      | integer   |  N   | offset  Starting from 0|
+>
+> api/market/trades/usdt_qc?sort=asc&by=timestamp&from=1573434000&till=1573436000&limit=100&offset=0
+>
+
+*Response*
+
+```html
+{
+    "code": 1000,
+    "message": "成功",
+    "data": [
+         {
+            "id": 3107340,                              //ID   long
+            "uuid": "3107340",                          //UUID   Default ID
+            "price": "0.00679",                         //price
+            "quantity": "1.046987",                     //quantity
+            "side": "sell",                             //buy or sell  
+            "timestamp": "2019-11-08 13:28:49.0",       //timestamp
+            "unixtimestamp": 1573219729                 //unixtimestamp
+          },
+        ......
+    ]
+}
+```
+*Demo*
+
+[java](#条件查询成交记录-trades)
 
 ----
 ### **获取用户信息**
@@ -573,7 +658,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
                   "currency": "btc_qc", //市场
                   "id": 631, //委托挂单号
                   "price": "60000.000000", //单价
-                  "status": 0, //挂单状态 (状态(0:交易中,1:已完成,2:已撤销, 3:部分成交 4:部分成交已撤销))
+                  "status": 0, //挂单状态 (状态(0:交易中,1:已完成,2:已撤销, 3:部分成交))
                   "total_amount": "0.113000", //挂单总数量
                   "trade_amount": "0.000000", //已成交数量
                   "trade_date": 1535162354, //委托时间
@@ -636,6 +721,50 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 *示例*
 
 [java](#获取交易记录-getTrades)
+
+
+----
+### **获取单个订单交易记录**
+*Request*
+> Method: GET
+>
+> URL: api/deal/tradeLog
+>
+> Parameters:
+>
+> | 参数        | 类型   |  必填   |  描述   |
+> | :--------:  | :-----:  |  :-----:  |  :-----:  |
+> |accesskey	   |   string	   |Y      |	accesskey    |
+> |method	|string|	Y|	直接赋值 tradeLog|
+> |reqTime|	int	|Y|	当前时间毫秒数|
+> |sign	|string	|Y|	签名串|
+> |orderId	|long|	Y|	订单ID|
+>
+> api/deal/getTrades?accesskey=f11c8358-9b30-4a5c-9c2d-906e4adb71d0&method=tradeLog&
+> sign=6ed7b69018b4c151b2cf77f531a655a0&reqTime=1535102429&orderId=1
+>
+*Response*
+
+```html
+{
+          "code": 1000,
+          "message": "成功",
+          "data": [
+              {
+                  "currency": "ceo_qc", //市场
+                  "id": 571, //交易id
+                  "price": "36.000000", //单价
+                  "amount": "0.261040", //交易量
+                  "type": 1, //交易类型 1/2[buy/sell]
+                  "date": 1538276466, //时间
+                  "fee": "0.000210" //手续费
+              }
+          ]
+}
+```
+*示例*
+
+[java](#单个订单交易记录-tradeLog)
 
 ----
 ### **获取用户充值地址**
@@ -1063,7 +1192,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
     public static final String PUB_MARKET_kline = HOST + "/api/market/kline";
     //获取交易对市场详情
     public static final String PUB_MARKET_symbol = HOST + "/api/market/symbol/%s";
-    //历史成交记录2
+    //条件查询成交记录
     public static final String PUB_MARKET_trades2 = HOST + "/api/market/trades/%s";
 
     //获取用户信息
@@ -1159,7 +1288,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
         bufferedReader.lines().forEach(e -> System.out.print(e));
     }
 ```
-> ###### 历史成交记录-trades2
+> ###### 条件查询成交记录-trades
 ```java
     public void trades2() throws Exception {
         String symbol = "usdt_qc";
@@ -1302,6 +1431,27 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
         bufferedReader.lines().forEach(e -> System.out.print(e));
     }
 ```
+> ###### 单个订单交易记录-tradeLog
+```java
+    public void getTradeLog() throws Exception{
+        Map<String, String> params = new HashMap<>();
+        params.put("accesskey", ACCESS_KEY);
+        params.put("method", "getTrades");
+        params.put("reqTime", System.currentTimeMillis()+"");
+        params.put("orderId", "1");
+        String sign = SignUtil.sign(params, SECRET_KEY);
+        params.put("sign", sign);
+        String paramsStr = SignUtil.convertStr(params);
+        String connUrl = PRI_DEAL_tradeLog + "?"+ paramsStr;
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+```
+
 > ###### 获取用户充值地址-getUserAddress
 ```java
     public void getUserAddress() throws Exception{

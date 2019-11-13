@@ -28,7 +28,7 @@ public class API {
     public static final String PUB_MARKET_kline = HOST + "/api/market/kline";
     //获取交易对市场详情
     public static final String PUB_MARKET_symbol = HOST + "/api/market/symbol/%s";
-    //历史成交记录2
+    //条件查询交易记录
     public static final String PUB_MARKET_trades2 = HOST + "/api/market/trades/%s";
     //获取用户信息
     public static final String PRI_DEAL_accountInfo = HOST + "/api/deal/accountInfo";
@@ -42,6 +42,8 @@ public class API {
     public static final String PRI_DEAL_getOrders = HOST + "/api/deal/getOrders";
     //获取交易记录
     public static final String PRI_DEAL_getTrades = HOST + "/api/deal/getTrades";
+    //获取单个订单交易记录
+    public static final String PRI_DEAL_tradeLog = HOST + "/api/deal/tradeLog";
     //获取用户充值地址
     public static final String PRI_DEAL_getUserAddress = HOST + "/api/deal/getUserAddress";
     //获取用户的数字币提现地址
@@ -136,7 +138,7 @@ public class API {
     }
 
     /**
-     * 历史成交记录2
+     * 条件查询交易记录
      * @throws Exception
      */
     public void trades2() throws Exception {
@@ -284,6 +286,28 @@ public class API {
         params.put("sign", sign);
         String paramsStr = SignUtil.convertStr(params);
         String connUrl = PRI_DEAL_getTrades + "?"+ paramsStr;
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+
+    /**
+     * 获取单个订单交易记录
+     * @throws Exception
+     */
+    public void getTradeLog() throws Exception{
+        Map<String, String> params = new HashMap<>();
+        params.put("accesskey", ACCESS_KEY);
+        params.put("method", "getTrades");
+        params.put("reqTime", System.currentTimeMillis()+"");
+        params.put("orderId", "1");
+        String sign = SignUtil.sign(params, SECRET_KEY);
+        params.put("sign", sign);
+        String paramsStr = SignUtil.convertStr(params);
+        String connUrl = PRI_DEAL_tradeLog + "?"+ paramsStr;
         URL url = new URL(connUrl);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
