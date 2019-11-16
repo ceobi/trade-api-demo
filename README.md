@@ -374,8 +374,8 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | 参数        | 类型   |  必填   |  描述   |
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > | symbol      | string   |  Y   |  市场名称   |
-> | sort      | string   |  Y   |  排序方式   DESC   ASC    |
-> | by      | string   |  N   |  根据（ID/时间）排序  (id  timestamp)  |
+> | sort      | string   |  N   |  排序方式   DESC   ASC    默认 DESC |
+> | by      | string   |  N   |  根据（ID/时间）排序  (id  timestamp)  默认 timestamp|
 > | from      | string   |  N   |   如果by-ID;tradeid；;否则时间;string   |
 > | till      | string   |  N   |   如果by-ID;tradeid；;否则时间;string   |
 > | limit      | integer   |  N   |   获取数量，默认100；integer   |
@@ -420,7 +420,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | Parameters  | type   |  required   |  description   |
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > | symbol      | string   |  Y   |  trading symbol  |
-> | sort      | string   |  Y   |  Sort direction   (DESC ASC)   Default value: DESC |
+> | sort      | string   |  N   |  Sort direction   (DESC ASC)   Default value: DESC |
 > | by      | string   |  N   |  Filter field  (id  timestamp)   Default value: timestamp|
 > | from      | string   |  N   | If filter by timestamp, then datetime in iso format or timestamp in millisecond otherwise trade id   |
 > | till      | string   |  N   | If filter by timestamp, then datetime in iso format or timestamp in millisecond otherwise trade id  |
