@@ -309,7 +309,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
     "code": 1000,
     "message": "成功",
     "data": {
-        "symbol": "usdt_qc",                              //交易对名称；string；required: true  
+        "id": "usdt_qc",                                  //交易对名称；string；required: true  
         "baseCurrency": "usdt",                           //交易货币名称；string; required: true
         "quoteCurrency": "qc",                            //计价货币名称；string；required: true
         "quantityIncrement": "0.001",                     //数量精度；string；required: true
