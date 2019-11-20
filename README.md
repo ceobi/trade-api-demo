@@ -467,7 +467,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 accountInfo|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 >
 > api/deal/accountInfo?accesskey=519b3346-7198-47e3-81b8-20ce13513835&method=accountInfo&
@@ -519,7 +519,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 order|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |price|	float	|Y|	单价|
 > |amount|	float	|Y	|交易数量|
@@ -557,7 +557,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 cancelOrder|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	市场名字|
 > |id|	int	|Y|	订单ID|
@@ -591,7 +591,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getOrder|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	市场名字|
 > |id|	int	|Y|	订单ID|
@@ -636,7 +636,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getOrders|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	市场名字|
 > |pageIndex|	int	|Y|	当前页数|
@@ -686,7 +686,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getTrades|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	市场名字|
 > |pageIndex|	int	|Y|	当前页数|
@@ -736,7 +736,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 tradeLog|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |orderId	|long|	Y|	订单ID|
 >
@@ -779,7 +779,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getUserAddress|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	币名|
 >
@@ -816,7 +816,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getWithdrawAddress|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	币名|
 >
@@ -853,7 +853,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getWithdrawRecord|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	币名|
 > |pageIndex|	int|	Y|	当前页数|
@@ -906,7 +906,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > | :--------:  | :-----:  |  :-----:  |  :-----:  |
 > |accesskey	   |   string	   |Y      |	accesskey    |
 > |method	|string|	Y|	直接赋值 getChargeRecord|
-> |reqTime|	int	|Y|	当前时间毫秒数|
+> |reqTime|	int	|Y|	当前时间秒数|
 > |sign	|string	|Y|	签名串|
 > |currency	|string|	Y|	币名|
 > |pageIndex|	int|	Y|	当前页数|
@@ -1006,6 +1006,90 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 ```
 *java*
 > 代码库中 SignUtil.java
+```java
+    public static String sign(Map<String, String> paramMap, String secret) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        TreeMap<String, String> params = new TreeMap<>();
+        params.putAll(paramMap);
+        params.entrySet()
+                .forEach(entry -> {
+                    if (sb.length() > 0) {
+                        sb.append("&");
+                    }
+                    sb.append(entry.getKey()).append("=");
+                    sb.append(entry.getValue());
+                });
+        return sign(sb.toString(), secret);
+    }
+
+    public static String convertStr(Map<String, String> paramMap){
+        StringBuilder sb = new StringBuilder();
+        TreeMap<String, String> params = new TreeMap<>();
+        params.putAll(paramMap);
+        params.entrySet()
+                .forEach(entry -> {
+                    if (sb.length() > 0) {
+                        sb.append("&");
+                    }
+                    sb.append(entry.getKey()).append("=");
+                    sb.append(entry.getValue());
+                });
+        return sb.toString();
+    }
+
+    public static String sign(String paramString, String secretKey) throws Exception {
+        SecretKeySpec secret_key = new SecretKeySpec(secretKey.getBytes(), "HmacMD5");
+        String actualSignature = "";
+        try {
+            actualSignature = Hex.encodeHexString(encodeHmacMD5(paramString.getBytes("UTF-8"), secret_key));
+        } catch (UnsupportedEncodingException e) {
+            throw new Exception("验签加密失败!");
+        }
+        return actualSignature;
+    }
+
+
+    /**
+     * 根据给定密钥生成算法创建密钥
+     *
+     * @param algorithm 密钥算法
+     * @return 密钥
+     * @throws RuntimeException 当 {@link NoSuchAlgorithmException} 发生时
+     */
+    private static byte[] getHmacKey(String algorithm) {
+        //初始化KeyGenerator
+        KeyGenerator keyGenerator = null;
+        try {
+            keyGenerator = KeyGenerator.getInstance(algorithm);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        //产生密钥
+        SecretKey secretKey = keyGenerator.generateKey();
+        //获得密钥
+        return secretKey.getEncoded();
+    }
+
+    /**
+     * 使用HmacMD5消息摘要算法计算消息摘要
+     *
+     * @param data 做消息摘要的数据
+     * @param key  密钥
+     * @return 消息摘要（长度为16的字节数组）
+     */
+    private static byte[] encodeHmacMD5(byte[] data, Key key) {
+        Mac mac = null;
+        try {
+            mac = Mac.getInstance("HmacMD5");
+            mac.init(key);
+        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            e.printStackTrace();
+            return new byte[0];
+        }
+        return mac.doFinal(data);
+    }
+
+```
 >
 *postman 交易API测试*
 > Params
