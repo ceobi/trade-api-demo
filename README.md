@@ -1068,13 +1068,6 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
         return actualSignature;
     }
 
-    /**
-     * 使用HmacMD5消息摘要算法计算消息摘要
-     *
-     * @param data 做消息摘要的数据
-     * @param key  密钥
-     * @return 消息摘要（长度为16的字节数组）
-     */
     private static byte[] encodeHmacMD5(byte[] data, Key key) {
         Mac mac = null;
         try {
