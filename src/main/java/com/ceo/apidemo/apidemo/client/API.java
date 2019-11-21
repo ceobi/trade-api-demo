@@ -26,6 +26,8 @@ public class API {
     public static final String PUB_MARKET_trades = HOST + "/api/market/trades";
     //K线
     public static final String PUB_MARKET_kline = HOST + "/api/market/kline";
+    //获取所有交易对市场详情
+    public static final String PUB_MARKET_allSymbol = HOST + "/api/market/allSymbol";
     //获取交易对市场详情
     public static final String PUB_MARKET_symbol = HOST + "/api/market/symbol/%s";
     //条件查询交易记录
@@ -114,6 +116,20 @@ public class API {
      */
     public void kline() throws Exception {
         String connUrl = PUB_MARKET_kline + "?market=ceo_qc&type=1min";
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+
+    /**
+     * 获取所有交易对详情
+     * @throws Exception
+     */
+    public void allSymbol() throws Exception {
+        String connUrl = PUB_MARKET_allSymbol;
         URL url = new URL(connUrl);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
@@ -427,7 +443,9 @@ public class API {
 //            api.getWithdrawRecord();
 //            api.getChargeRecord();
 //            api.symbol();
-            api.trades2();
+//            api.trades2();
+
+            api.allSymbol();
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -46,6 +46,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 * [委托记录](#委托记录)
 * [历史成交](#历史成交)
 * [K线](#K线)
+* [所有交易对市场详情](#所有交易对市场详情)
 * [交易对市场详情](#交易对市场详情)
 * [Get symbol info](#Get-symbol-info) 
 * [条件查询成交记录](#条件查询成交记录)
@@ -287,6 +288,40 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 [java](#K线-kline)
 
 ----
+### **所有交易对市场详情**
+*Request*
+> Method: GET
+>
+> URL: api/market/allSymbol
+>
+> Parameters:
+> 无
+>
+> api/market/allSymbol
+>
+*Response*
+
+```html
+{
+    "code": 1000,
+    "message": "成功",
+    "data": [{
+        "id": "usdt_qc",                                  //交易对名称；string；required: true  
+        "baseCurrency": "usdt",                           //交易货币名称；string; required: true
+        "quoteCurrency": "qc",                            //计价货币名称；string；required: true
+        "quantityIncrement": "0.001",                     //数量精度；string；required: true
+        "tickSize": "0.00001",                            //价格精度；string；required: true
+        "takeLiquidityRate": "0.0012",                    //taker手续费率；string；
+        "provideLiquidityRate": "0.0012",                 //maker手续费率；string；
+        "feeCurrency": "qc"                               //手续费币种；string；        
+    }]
+}
+```
+*示例*
+
+[java](#所有交易对市场详情-symbol)
+
+----
 ### **交易对市场详情**
 *Request*
 > Method: GET
@@ -322,7 +357,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 ```
 *示例*
 
-[java](#Get-symbol-info)
+[java](#市场详情-symbol)
 
 ----
 ### **Get-symbol-info**
@@ -1244,7 +1279,8 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
        {
             "date" : 1567582150426 ,
             "data": [
-                {
+                {   
+                    "id": 1,
                     "amount": "5000.000000", //  交易数量
                     "price": "0.400000", //  交易价格
                     "type": 2, //  交易类型，1(买)/2(卖)
@@ -1359,6 +1395,23 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
         bufferedReader.lines().forEach(e -> System.out.print(e));
     }
 ```
+> ###### 所有交易对市场详情-symbol
+```java
+    /**
+     * 获取所有交易对详情
+     * @throws Exception
+     */
+    public void allSymbol() throws Exception {
+        String connUrl = PUB_MARKET_allSymbol;
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+ ```
+
 > ###### 市场详情-symbol
 ```java
     public void symbol() throws Exception {
