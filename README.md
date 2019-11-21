@@ -1057,21 +1057,6 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
         return sign(sb.toString(), secret);
     }
 
-    public static String convertStr(Map<String, String> paramMap){
-        StringBuilder sb = new StringBuilder();
-        TreeMap<String, String> params = new TreeMap<>();
-        params.putAll(paramMap);
-        params.entrySet()
-                .forEach(entry -> {
-                    if (sb.length() > 0) {
-                        sb.append("&");
-                    }
-                    sb.append(entry.getKey()).append("=");
-                    sb.append(entry.getValue());
-                });
-        return sb.toString();
-    }
-
     public static String sign(String paramString, String secretKey) throws Exception {
         SecretKeySpec secret_key = new SecretKeySpec(secretKey.getBytes(), "HmacMD5");
         String actualSignature = "";
@@ -1081,28 +1066,6 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
             throw new Exception("验签加密失败!");
         }
         return actualSignature;
-    }
-
-
-    /**
-     * 根据给定密钥生成算法创建密钥
-     *
-     * @param algorithm 密钥算法
-     * @return 密钥
-     * @throws RuntimeException 当 {@link NoSuchAlgorithmException} 发生时
-     */
-    private static byte[] getHmacKey(String algorithm) {
-        //初始化KeyGenerator
-        KeyGenerator keyGenerator = null;
-        try {
-            keyGenerator = KeyGenerator.getInstance(algorithm);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        //产生密钥
-        SecretKey secretKey = keyGenerator.generateKey();
-        //获得密钥
-        return secretKey.getEncoded();
     }
 
     /**
