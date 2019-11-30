@@ -55,6 +55,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 * [委托下单](#委托下单)
 * [取消委托](#取消委托)
 * [获取委托买单或卖单](#获取委托买单或卖单)
+* [外部订单标识获取委托买单或卖单](#外部订单标识获取委托买单或卖单)
 * [获取多个委托买单或卖单](#获取多个委托买单或卖单)
 * [获取交易记录](#获取交易记录)
 * [获取单个订单交易记录](#获取单个订单交易记录)
@@ -560,6 +561,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > |amount|	float	|Y	|交易数量|
 > |tradeType|	int	|Y	|交易类型1/2[买/卖]|
 > |currency	|string|	Y|	市场名字|
+> |outerId	|string|  N  |	外部订单标识(非必填可不传) |
 >
 > api/deal/order?accesskey=519b3346-7198-47e3-81b8-20ce13513835&method=order&
 > sign=f7169edac202a776b87811661817aeeb&reqTime=1535102429&price=60000&amount=0.113&tradeType=1&currency=btc_qc
@@ -657,6 +659,51 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 *示例*
 
 [java](#获取委托买单或卖单-getOrder)
+
+
+----
+### **外部订单标识获取委托买单或卖单**
+*Request*
+> Method: GET
+>
+> URL: api/deal/getOrderByOuter
+>
+> Parameters:
+>
+> | 参数        | 类型   |  必填   |  描述   |
+> | :--------:  | :-----:  |  :-----:  |  :-----:  |
+> |accesskey	   |   string	   |Y      |	accesskey    |
+> |method	|string|	Y|	直接赋值 getOrderByOuter|
+> |reqTime|	int	|Y|	当前时间秒数|
+> |sign	|string	|Y|	签名串|
+> |outerId|	String	|Y|	外部订单ID|
+>
+> api/deal/getOrder?accesskey=519b3346-7198-47e3-81b8-20ce13513835&method=getOrderByOuter&
+> sign=d712dfa60eaf5bc4053ebcd4af5ec253&reqTime=1535102429&outerId=626
+>
+*Response*
+
+```html
+{
+          "code": 1000,
+          "message": "成功",
+          "data": {
+              "currency": "btc_qc", //市场
+              "id": 626, //委托挂单号
+              "price": "60000.000000", //单价
+              "status": 2, ////挂单状态 (状态(0:交易中,1:已完成,2:已撤销, 3:部分成交))
+              "total_amount": "0.113000", //挂单总数量
+              "trade_amount": "0.000000", //已成交数量
+              "trade_time": 1534301098, //委托时间
+              "trade_money": "6793.560000", //总交易金额
+              "type": 1 //挂单类型 1/2[buy/sell]
+              "deal_money": "15.560000", //实际成交金额
+          }
+}
+```
+*示例*
+
+[java](#外部订单标识获取委托买单或卖单-getOrderByOuter)
 
 ----
 ### **获取多个委托买单或卖单**
@@ -756,7 +803,6 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 *示例*
 
 [java](#获取交易记录-getTrades)
-
 
 ----
 ### **获取单个订单交易记录**
@@ -1470,6 +1516,26 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
         params.put("sign", sign);
         String paramsStr = SignUtil.convertStr(params);
         String connUrl = PRI_DEAL_getOrder + "?"+ paramsStr;
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+```
+> ###### 外部订单标识获取委托买单或卖单-getOrderByOuter
+```java
+    public void getOrderByOuter() throws Exception{
+        Map<String, String> params = new HashMap<>();
+        params.put("accesskey", ACCESS_KEY);
+        params.put("method", "getOrders");
+        params.put("reqTime", System.currentTimeMillis()+"");
+        params.put("outerId", "outer_1");
+        String sign = SignUtil.sign(params, SECRET_KEY);
+        params.put("sign", sign);
+        String paramsStr = SignUtil.convertStr(params);
+        String connUrl = PRI_DEAL_getOrderByOuter + "?"+ paramsStr;
         URL url = new URL(connUrl);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");

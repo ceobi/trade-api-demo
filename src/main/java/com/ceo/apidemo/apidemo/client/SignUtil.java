@@ -1,6 +1,7 @@
 package com.ceo.apidemo.apidemo.client;
 
 import org.apache.commons.codec.binary.Hex;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
@@ -22,11 +23,13 @@ public class SignUtil {
         params.putAll(paramMap);
         params.entrySet()
                 .forEach(entry -> {
-                    if (sb.length() > 0) {
-                        sb.append("&");
+                    if(!StringUtils.isEmpty(entry.getValue())){
+                        if (sb.length() > 0) {
+                            sb.append("&");
+                        }
+                        sb.append(entry.getKey()).append("=");
+                        sb.append(entry.getValue());
                     }
-                    sb.append(entry.getKey()).append("=");
-                    sb.append(entry.getValue());
                 });
         return sign(sb.toString(), secret);
     }
@@ -37,11 +40,13 @@ public class SignUtil {
         params.putAll(paramMap);
         params.entrySet()
                 .forEach(entry -> {
-                    if (sb.length() > 0) {
-                        sb.append("&");
+                    if(!StringUtils.isEmpty(entry.getValue())){
+                        if (sb.length() > 0) {
+                            sb.append("&");
+                        }
+                        sb.append(entry.getKey()).append("=");
+                        sb.append(entry.getValue());
                     }
-                    sb.append(entry.getKey()).append("=");
-                    sb.append(entry.getValue());
                 });
         return sb.toString();
     }

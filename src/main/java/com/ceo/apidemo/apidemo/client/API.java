@@ -12,10 +12,11 @@ import java.util.Map;
 
 public class API {
 
-    public static final String ACCESS_KEY = "";
-    public static final String SECRET_KEY = "";
+    public static final String ACCESS_KEY = "e7599c17-9541-45e3-9ab4-15e6fb3e0b39";
+    public static final String SECRET_KEY = "592b4613-83ee-403f-aa87-e22c041353db";
 
     public static final String HOST = "https://api.ceobi.com";
+//    public static final String HOST = "http://localhost:7099";
     //获取全币种行情
     public static final String PUB_MARKET_allTicker = HOST + "/api/market/allTicker";
     //行情
@@ -42,6 +43,8 @@ public class API {
     public static final String PRI_DEAL_getOrder = HOST + "/api/deal/getOrder";
     //获取多个委托买单或卖单
     public static final String PRI_DEAL_getOrders = HOST + "/api/deal/getOrders";
+    //获取委托买单或卖单
+    public static final String PRI_DEAL_getOrderByOuter = HOST + "/api/deal/getOrderByOuter";
     //获取交易记录
     public static final String PRI_DEAL_getTrades = HOST + "/api/deal/getTrades";
     //获取单个订单交易记录
@@ -197,11 +200,12 @@ public class API {
         Map<String, String> params = new HashMap<>();
         params.put("accesskey", ACCESS_KEY);
         params.put("method", "order");
-        params.put("reqTime", System.currentTimeMillis()+"");
-        params.put("price", "6000");
+        params.put("reqTime", "1574325703490");
+        params.put("price", "6");
         params.put("amount", "0.113");
         params.put("tradeType",  "1");
-        params.put("currency", "ceo_qc");
+        params.put("currency", "usdt_qc");
+//        params.put("outerId", "outer_1");
         String sign = SignUtil.sign(params, SECRET_KEY);
         params.put("sign", sign);
         String paramsStr = SignUtil.convertStr(params);
@@ -278,6 +282,28 @@ public class API {
         params.put("sign", sign);
         String paramsStr = SignUtil.convertStr(params);
         String connUrl = PRI_DEAL_getOrders + "?"+ paramsStr;
+        URL url = new URL(connUrl);
+        URLConnection urlConnection = url.openConnection();
+        urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
+        InputStream inputStream = urlConnection.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        bufferedReader.lines().forEach(e -> System.out.print(e));
+    }
+
+    /**
+     * 外部订单号获取委托买单或卖单
+     * @throws Exception
+     */
+    public void getOrderByOuter() throws Exception{
+        Map<String, String> params = new HashMap<>();
+        params.put("accesskey", ACCESS_KEY);
+        params.put("method", "getOrders");
+        params.put("reqTime", System.currentTimeMillis()+"");
+        params.put("outerId", "outer_1");
+        String sign = SignUtil.sign(params, SECRET_KEY);
+        params.put("sign", sign);
+        String paramsStr = SignUtil.convertStr(params);
+        String connUrl = PRI_DEAL_getOrderByOuter + "?"+ paramsStr;
         URL url = new URL(connUrl);
         URLConnection urlConnection = url.openConnection();
         urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
@@ -413,6 +439,7 @@ public class API {
         params.put("pageIndex", "1");
         params.put("pageSize", "10");
         String sign = SignUtil.sign(params, SECRET_KEY);
+        System.out.println(sign);
         params.put("sign", sign);
         String paramsStr = SignUtil.convertStr(params);
         String connUrl = PRI_DEAL_getChargeRecord + "?"+ paramsStr;
@@ -427,7 +454,7 @@ public class API {
     public static void main(String[] args) {
         try {
             API api = new API();
-//            api.allTicker();
+            api.allTicker();
 //            api.ticker();
 //            api.entrust();
 //            api.trades();
@@ -437,6 +464,7 @@ public class API {
 //            api.cancelOrder();
 //            api.getOrder();
 //            api.getOrders();
+//            api.getOrderByOuter();
 //            api.getTrades();
 //            api.getUserAddress();
 //            api.getWithdrawAddress();
@@ -445,7 +473,7 @@ public class API {
 //            api.symbol();
 //            api.trades2();
 
-            api.allSymbol();
+//            api.allSymbol();
         } catch (Exception e){
             e.printStackTrace();
         }
