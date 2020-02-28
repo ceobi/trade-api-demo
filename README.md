@@ -774,8 +774,8 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 > |pageIndex|	int	|Y|	当前页数|
 > |pageSize|	int	|Y|	每页数量 10-100|
 > |orderId	|int|	Y	|订单编号|
-> |startTime|	int|	Y|	开始时间毫秒数|
-> |endTime	|int	|Y|	结束时间毫秒数|
+> |startTime|	int|	Y|	开始时间秒数|
+> |endTime	|int	|Y|	结束时间秒数|
 >
 > api/deal/getTrades?accesskey=f11c8358-9b30-4a5c-9c2d-906e4adb71d0&method=getTrades&
 > sign=6ed7b69018b4c151b2cf77f531a655a0&reqTime=1535102429&pageIndex=1&currency=ceo_qc&
