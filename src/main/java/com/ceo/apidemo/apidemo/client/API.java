@@ -16,7 +16,7 @@ public class API {
     public static final String SECRET_KEY = "592b4613-83ee-403f-aa87-e22c041353db";
 
     public static final String HOST = "https://api.ceoex.com";
-//    public static final String HOST = "http://localhost:7099";
+
     //获取全币种行情
     public static final String PUB_MARKET_allTicker = HOST + "/api/market/allTicker";
     //行情
