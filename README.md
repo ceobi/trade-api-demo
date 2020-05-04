@@ -33,8 +33,8 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
 ----
 
 ##### 访问地址：
-* REST：https://api.ceobi.com/
-* WebSocket：wss://api.ceobi.com/websocket
+* REST：https://api.ceoex.com/
+* WebSocket：wss://api.ceoex.com/websocket
 
 ----
 
@@ -1301,7 +1301,7 @@ WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工�
     public static final String ACCESS_KEY = "";
     public static final String SECRET_KEY = "";
 
-    public static final String HOST = "https://api.ceobi.com";
+    public static final String HOST = "https://api.ceoex.com";
     //获取全币种行情
     public static final String PUB_MARKET_allTicker = HOST + "/api/market/allTicker";
     //行情
