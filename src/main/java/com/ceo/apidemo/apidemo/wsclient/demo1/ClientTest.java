@@ -2,7 +2,7 @@ package com.ceo.apidemo.apidemo.wsclient.demo1;
 
 public class ClientTest {
 
-	public static String serverUrl = "wss://api.ceobi.com/websocket";
+	public static String serverUrl = "wss://api.ceoex.com/websocket";
 
 	public static void main(String[] args) {
 
